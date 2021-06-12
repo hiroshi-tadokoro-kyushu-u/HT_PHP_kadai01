@@ -9,10 +9,15 @@
     <link rel="stylesheet" href="/HT_kadai01/HT_PHP_kadai01/reset.css">
     <link rel="stylesheet" href="/HT_kadai01/HT_PHP_kadai01/toppage.css">
     <script src="/HT_kadai01/HT_PHP_kadai01/jquery-2.1.3.min.js"></script>
+  
     <!-- ガントチャート -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/frappe-gantt/0.5.0/frappe-gantt.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/frappe-gantt/0.5.0/frappe-gantt.min.js"></script>
-    
+  
+    <!--マップ表示-->
+    <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Aq53wekz4XEBw0Ld_FGVw8sWsKQCD-6xWNVNEIwPwuu81Ez_5tyLrtUbMpmq4EH6' async defer></script>
+    <script src="/HT_kadai01/HT_PHP_kadai01/src/BmapQuery.js"></script>
+
     <title>INDEX</title>
 </head>
 
@@ -51,15 +56,28 @@
 <body>
     <div class="dead_space">
     </div>
+    
     <div id="driver_schedule", class="section_title">
         DRIVER SCHEDULE
     </div>
+
     <div id="workspace_01" class="workspace">
         <svg id="gantt">
-
         </svg>
         
         <div class="map_space">
+            <div id="myMap" style='width:100%;height:100%;'>
+            </div>
+            <!--Directions[START]-->
+        <div>
+            <input type="button" id="search" value="ルート検索">
+            <input type="button" id="clear" value="clear">
+        </div>
+        <div id="direction"></div>
+        <!-- Directions[END] -->
+
+
+
 
         </div>
     </div>
@@ -150,43 +168,59 @@ window.onload = function() {
   var tasks = [
     {
     	id: 'id1',
-    	name: '確定申告する',
-    	description: '必ずやる!!',
-    	start: '2021-01-02',
-    	end: '2021-01-7',
+    	name: '配車番号01',
+    	description: 'XXガス',
+    	start: '2021-06-01',
+    	end: '2021-06-08',
     	progress: 100,
     },
     {
     	id: 'id2',
-    	name: 'クライアントに挨拶',
-    	description: '年賀状も確認した上で連絡する',
-    	start: '2021-01-4',
-    	end: '2021-01-8',
-    	progress: 100,
+    	name: '配車番号02',
+    	description: 'XXガス',
+    	start: '2021-06-02',
+    	end: '2021-06-05',
+    	progress: 25,
     },
     {
     	id: 'id3',
-    	name: '請求書作成',
-    	description: 'みんなに稼働時間を記録してもらった上で請求を出す',
-    	start: '2021-01-5',
-    	end: '2021-01-6',
-    	progress: 40,
+    	name: '配車番号03',
+    	description: 'YYガス',
+    	start: '2021-06-06',
+    	end: '2021-06-10',
+    	progress: 60,
     },
     {
     	id: 'id4',
-    	name: '案件A を開発',
-    	description: 'まずはフレームワークのアップデートやる!',
-    	start: '2021-01-5',
-    	end: '2021-01-11',
+    	name: '配車番号04',
+    	description: 'YYガス',
+    	start: '2021-06-11',
+    	end: '2021-06-12',
     	progress: 50,
     },
     {
     	id: 'id5',
-    	name: 'フィードバック面談',
-    	description: '各メンバーシートを記入してもらった上で 1on1',
-    	start: '2021-01-12',
-    	end: '2021-01-16',
-    	progress: 20,
+    	name: '配車番号05',
+    	description: 'TBD',
+    	start: '2021-06-13',
+    	end: '2021-06-17',
+    	progress: 60,
+    },
+    {
+    	id: 'id6',
+    	name: '配車番号06',
+    	description: 'TBD',
+    	start: '2021-06-13',
+    	end: '2021-06-17',
+    	progress: 60,
+    },
+    {
+    	id: 'id7',
+    	name: '配車番号07',
+    	description: 'TBD',
+    	start: '2021-06-13',
+    	end: '2021-06-17',
+    	progress: 60,
     },
   ];
   
@@ -195,6 +229,9 @@ window.onload = function() {
     // ダブルクリック時
     on_click: (task) => {
       console.log(task.description);
+      const map = new Bmap("#myMap");
+      map.direction("#direction", mode, from, to,[]);
+
     },
     // 日付変更時
     on_date_change: (task, start, end) => {
@@ -206,6 +243,53 @@ window.onload = function() {
     },
   });
 };
+// ガントチャート
+
+// マップ表示
+//****************************************************************************************
+// BingMaps&BmapQuery
+//****************************************************************************************
+//Init
+function GetMap(){
+    //------------------------------------------------------------------------
+    //1. Instance
+    //------------------------------------------------------------------------
+    const map = new Bmap("#myMap");
+
+    //------------------------------------------------------------------------
+    //2. Display Map
+    //   startMap(lat, lon, "MapType", Zoom[1~20]);
+    //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
+    //--------------------------------------------------
+    map.startMap(37.4923599, 139.9306068, "load", 14);
+
+    //------------------------------------------------------------------------
+    //3. Directions
+    // map.direction("#rootView", "from" , "to", waypoint[array]);
+    // !! 日本地図で表示してる場合のみルート検索可能（各国毎）以下パラメータ指定で制御も可能 !!
+    // +  [ English => https://www.bing.com/...&setLang=en&setMkt=en-US ]
+    // +  [ Japan   => https://www.bing.com/...&setLang=ja&setMkt=ja-JP ]
+    //------------------------------------------------------------------------
+    document.getElementById("search").onclick = function () {
+        //Get From,To
+        const from  = '西若松';  //StartPoint
+        const to    = '会津高校';    //EndPoint
+        const mode  = 'driving';  //RouteMode[walking,driving]
+        //経由地あり
+        // const array = ["新宿", "恵比寿"];                       //Waypoints...
+        // map.direction("#direction", mode, from, to, array);  //Direction Methed
+        //経由地なし
+        map.direction("#direction", mode, from, to,[]);
+    };
+    document.getElementById("clear").onclick = function () {
+        console.log("1");
+        $('.directionsPanel').remove();
+        console.log("2");
+    };
+
+
+}
+    
 </script>
 
 </body>

@@ -47,6 +47,7 @@ body{
     top: -56px;
     transition: .5s;
     width: 100%;
+    z-index: 200;
 }
 
 .gnav__menu{
@@ -129,7 +130,7 @@ body{
 
 .map_space{
     margin: 10px;
-    height: 80px;
+    height: 450px;
     width: 40%;
     background-color: #2988bc;
 }
