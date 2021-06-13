@@ -31,7 +31,7 @@
     <nav class="gnav">
         <ul class="gnav__menu">
             <li class="gnav__menu__item"><a href="#driver_schedule">DRIVER SCHEDULE</a></li>
-            <li class="gnav__menu__item"><a href="">Works</a></li>
+            <li class="gnav__menu__item"><a href="#product_order">PRODUCT ORDER</a></li>
             <li class="gnav__menu__item"><a href="">Recruit</a></li>
             <li class="gnav__menu__item"><a href="">News</a></li>
             <li class="gnav__menu__item"><a href="">Contact</a></li>
@@ -45,7 +45,7 @@
     <nav class="gnav">
         <ul class="gnav__menu">
             <li class="gnav__menu__item"><a href="#driver_schedule">DRIVER SCHEDULE</a></li>
-            <li class="gnav__menu__item"><a href="">Works</a></li>
+            <li class="gnav__menu__item"><a href="#product_order">PRODUCT ORDER</a></li>
             <li class="gnav__menu__item"><a href="">Recruit</a></li>
             <li class="gnav__menu__item"><a href="">News</a></li>
             <li class="gnav__menu__item"><a href="">Contact</a></li>
@@ -66,21 +66,79 @@
         </svg>
         
         <div class="map_space">
-            <div id="myMap" style='width:100%;height:100%;'>
+            <div id="myMap_01" style='width:100%;height:100%;'>
             </div>
             <!--Directions[START]-->
-        <div>
-            <input type="button" id="search" value="ルート検索">
-            <input type="button" id="clear" value="clear">
-        </div>
-        <div id="direction"></div>
-        <!-- Directions[END] -->
-
-
-
-
+            <div>
+                <input type="button" id="search" value="ルート検索">
+                <input type="button" id="clear" value="clear" style="height:26px;">
+            </div>
+            <div id="direction"></div>
+            <!-- Directions[END] -->
         </div>
     </div>
+
+    <div class="page_jump">
+        <a id="next_page_01" href="">
+            機能詳細
+        </a>
+    </div>
+
+    <div id="product_order", class="section_title">
+        PRODUCT ORDER
+    </div>
+
+    <div id="workspace_02" class="workspace">
+        
+        <div class="product_info">
+            <img class="product_img" src="/HT_kadai01/HT_PHP_kadai01/product_img.png" alt="">
+            <div>
+                PRODUCT_NAME:「製品名」
+            </div>
+            <div>
+                STOCK_POINT:「出荷店名/出荷倉庫」
+            </div>
+        </div>
+        
+        <div class="table_space">
+            <form method="post" action="table_data.php">
+                <table class="input_table">
+                    <tr>
+                        <th>注文番号</th>
+                        <th>製品名</th>
+                        <th>出荷地点</th>
+                        <th>発送先</th>
+                        <th>発送時間(From)</th>
+                        <th>発送時間(To)</th>
+                        <th>登録</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="order_number" id="order_number"></td>
+                        <td><input type="text" name="product_name" id="product_name"></td>
+                        <td><input type="text" name="point_from" id="point_from"></td>
+                        <td><input type="text" name="point_to" id="point_to"></td>
+                        <td><input type="text" name="time_from" id="time_from"></td>
+                        <td><input type="text" name="time_to" id="time_to"></td>
+                        <td><input type="submit" value="登録" id="f_send"></input></td>
+                    </tr>
+                    <tr>
+                        <?php
+                            include("table_data.php");
+                        ?>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <div class="page_jump">
+        <a id="next_page_01" href="">
+            機能詳細
+        </a>
+    </div>
+
+
+
 
     <br>
     <br>
@@ -161,8 +219,8 @@
 _window.trigger('scroll');
 // メニューバースクロール
 
-// ガントチャート
 
+// ガントチャート
 window.onload = function() {
   // タスクを用意
   var tasks = [
@@ -229,7 +287,7 @@ window.onload = function() {
     // ダブルクリック時
     on_click: (task) => {
       console.log(task.description);
-      const map = new Bmap("#myMap");
+      const map = new Bmap("#myMap_01");
       map.direction("#direction", mode, from, to,[]);
 
     },
@@ -245,6 +303,7 @@ window.onload = function() {
 };
 // ガントチャート
 
+
 // マップ表示
 //****************************************************************************************
 // BingMaps&BmapQuery
@@ -254,7 +313,8 @@ function GetMap(){
     //------------------------------------------------------------------------
     //1. Instance
     //------------------------------------------------------------------------
-    const map = new Bmap("#myMap");
+    const map = new Bmap("#myMap_01");
+    
 
     //------------------------------------------------------------------------
     //2. Display Map
@@ -286,10 +346,65 @@ function GetMap(){
         $('.directionsPanel').remove();
         console.log("2");
     };
-
-
 }
-    
+
+
+//****************************************************************************************
+// BingMaps&BmapQuery
+//****************************************************************************************
+//Init
+// function GetMap(){
+    //------------------------------------------------------------------------
+    //1. Instance
+    //------------------------------------------------------------------------
+    // const map = new Bmap("#myMap_02");
+
+    //------------------------------------------------------------------------
+    //2. Display Map
+    //   startMap(lat, lon, "MapType", Zoom[1~20]);
+    //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
+    //--------------------------------------------------
+    // map.startMap(37.4923599, 139.9306068, "load", 14);
+
+    //------------------------------------------------------------------------
+    //3.Circle Add
+    //  circleSet( Meter, style={pinColor,fillColor,strokeWidth} );
+    //------------------------------------------------------------------------
+    //Blue
+    // const style1 = {
+    //     pinColor:"#0000ff",
+    //     fillColor:"rgba(0,0,100,0.6)",
+    //     strokeWidth:1
+    // };
+    // map.circle(100, style1); //1000m=1km
+    // map.circle(300, style1); //2000m=2Km
+    // map.circle(500, style1); //3000m=3km
+// }
+
+
+
+
+</script>
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.7/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyASZgOVOx3a__us92XCvnWQt6-fc736Dpg",
+    authDomain: "drivermatchingtest.firebaseapp.com",
+    projectId: "drivermatchingtest",
+    storageBucket: "drivermatchingtest.appspot.com",
+    messagingSenderId: "905046854501",
+    appId: "1:905046854501:web:7e5c673b41c3a246c46f8c"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 </script>
 
 </body>
