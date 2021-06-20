@@ -32,7 +32,7 @@
         <ul class="gnav__menu">
             <li class="gnav__menu__item"><a href="#driver_schedule">DRIVER SCHEDULE</a></li>
             <li class="gnav__menu__item"><a href="#product_order">PRODUCT ORDER</a></li>
-            <li class="gnav__menu__item"><a href="">Recruit</a></li>
+            <li class="gnav__menu__item"><a href="#package_matching">PACKAGE MATCHING</a></li>
             <li class="gnav__menu__item"><a href="">News</a></li>
             <li class="gnav__menu__item"><a href="">Contact</a></li>
         </ul>
@@ -46,7 +46,7 @@
         <ul class="gnav__menu">
             <li class="gnav__menu__item"><a href="#driver_schedule">DRIVER SCHEDULE</a></li>
             <li class="gnav__menu__item"><a href="#product_order">PRODUCT ORDER</a></li>
-            <li class="gnav__menu__item"><a href="">Recruit</a></li>
+            <li class="gnav__menu__item"><a href="#package_matching">PACKAGE MATCHING</a></li>
             <li class="gnav__menu__item"><a href="">News</a></li>
             <li class="gnav__menu__item"><a href="">Contact</a></li>
         </ul>
@@ -84,13 +84,15 @@
         </a>
     </div>
 
+
+
     <div id="product_order", class="section_title">
         PRODUCT ORDER
     </div>
 
     <div id="workspace_02" class="workspace">
         
-        <div class="product_info">
+        <!-- <div class="product_info">
             <img class="product_img" src="/HT_kadai01/HT_PHP_kadai01/product_img.png" alt="">
             <div>
                 PRODUCT_NAME:「製品名」
@@ -98,27 +100,27 @@
             <div>
                 STOCK_POINT:「出荷店名/出荷倉庫」
             </div>
-        </div>
+        </div> -->
         
         <div class="table_space">
-            <form method="post" action="table_data.php">
+            <form method="post" action="database.php" style="height: 500px">
                 <table class="input_table">
                     <tr>
-                        <th>注文番号</th>
-                        <th>製品名</th>
-                        <th>出荷地点</th>
-                        <th>発送先</th>
-                        <th>発送時間(From)</th>
-                        <th>発送時間(To)</th>
+                        <th style="width: 150px;">注文番号</th>
+                        <th style="width: 150px;">製品名</th>
+                        <th style="width: 150px;">出荷地点</th>
+                        <th style="width: 150px;">発送先</th>
+                        <th style="width: 150px;">発送時間(From)</th>
+                        <th style="width: 150px;">発送時間(To)</th>
                         <th>登録</th>
                     </tr>
                     <tr>
-                        <td><input type="text" name="order_number" id="order_number"></td>
-                        <td><input type="text" name="product_name" id="product_name"></td>
-                        <td><input type="text" name="point_from" id="point_from"></td>
-                        <td><input type="text" name="point_to" id="point_to"></td>
-                        <td><input type="text" name="time_from" id="time_from"></td>
-                        <td><input type="text" name="time_to" id="time_to"></td>
+                        <td><input type="text" name="order_number" id="order_number" style="width: 150px;"></td>
+                        <td><input type="text" name="product_name" id="product_name" style="width: 150px;"></td>
+                        <td><input type="text" name="point_from" id="point_from" style="width: 150px;"></td>
+                        <td><input type="text" name="point_to" id="point_to" style="width: 150px;"></td>
+                        <td><input type="date" value="2021-06-20" name="time_from" id="time_from" style="width: 150px;"></td>
+                        <td><input type="date" value="2021-06-21" name="time_to" id="time_to" style="width: 150px;"></td>
                         <td><input type="submit" value="登録" id="f_send"></input></td>
                     </tr>
                     <tr>
@@ -138,61 +140,22 @@
     </div>
 
 
+    <div id="package_matching", class="section_title">
+        PACKAGE MATCHING
+    </div>
 
+    <div id="workspace_03" class="workspace">
+        <div class="video_frame" style="width: 1000px; object-fit: cover;">
+            <iframe style="object-fit: cover;" width="1000" height="500" src="\HT_kadai01\HT_PHP_kadai01\INDEX - Google Chrome 2021-06-20 23-57-07_Trim.mp4" frameborder="0"></iframe>
+        </div>
+    </div>
 
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <div class="page_jump">
+        <a id="next_page_01" href="">
+            機能詳細
+        </a>
+    </div>
+
     
 <footer class="site_footer">
     <p class="copyright">Sample</p>
@@ -288,7 +251,9 @@ window.onload = function() {
     on_click: (task) => {
       console.log(task.description);
       const map = new Bmap("#myMap_01");
+      const submap = new Bmap("#subMap");
       map.direction("#direction", mode, from, to,[]);
+      submap.direction("#direction", mode, from, to,[]);
 
     },
     // 日付変更時
@@ -314,7 +279,7 @@ function GetMap(){
     //1. Instance
     //------------------------------------------------------------------------
     const map = new Bmap("#myMap_01");
-    
+    // const submap = new Bmap("#subMap");
 
     //------------------------------------------------------------------------
     //2. Display Map
@@ -322,6 +287,7 @@ function GetMap(){
     //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
     //--------------------------------------------------
     map.startMap(37.4923599, 139.9306068, "load", 14);
+    // submap.startMap(37.4923599, 139.9306068, "load", 14);
 
     //------------------------------------------------------------------------
     //3. Directions
@@ -406,6 +372,9 @@ function GetMap(){
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 </script>
+
+
+
 
 </body>
 </html>
