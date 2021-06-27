@@ -4,18 +4,21 @@
     <link rel="stylesheet" href="/HT_kadai01/HT_PHP_kadai01/reset.css">
     <link rel="stylesheet" href="/HT_kadai01/HT_PHP_kadai01/toppage.css">
     <script src="/HT_kadai01/HT_PHP_kadai01/jquery-2.1.3.min.js"></script>
-    <title>データ登録</title>
+    <title>データ表示</title>
 </head>
 <body>
 
 <?php
 //1.  DB接続します
-try {
-    //Password:MAMP='root',XAMPP=''
-    $pdo = new PDO('mysql:dbname=package_matching;charset=utf8;host=localhost','root','root');
-    } catch (PDOException $e) {
-    exit('DBConnectError:'.$e->getMessage());
-    }
+// try {
+//     //Password:MAMP='root',XAMPP=''
+//     $pdo = new PDO('mysql:dbname=package_matching;charset=utf8;host=localhost','root','root');
+//     } catch (PDOException $e) {
+//     exit('DBConnectError:'.$e->getMessage());
+//     }
+
+    require_once('tools.php');
+    $pdo = db_connect();
 
 //２．SQL文を用意(データ取得：SELECT)
 $stmt = $pdo->prepare("SELECT * FROM product");
@@ -47,7 +50,11 @@ $status = $stmt->execute();
                             echo '<td style="width: 158px;">'.$result['point_to'].'</td>';
                             echo '<td style="width: 155px;">'.$result['time_from'].'</td>';
                             echo '<td style="width: 155px;">'.$result['time_to'].'</td>';
-                            echo '<td style="width: 65px;"><input type="button" value="修正" class="revise_button"></input></td>';
+                            echo    '<td style="width: 65px;">
+                                        <a href="revise.php?order_number='.$result['order_number'].'">
+                                            [修正/削除]
+                                        </a>
+                                    </td>';
                             echo '</tr>';
                             echo '<tr>';
                             }

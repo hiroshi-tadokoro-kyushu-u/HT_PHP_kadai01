@@ -30,8 +30,8 @@ $pdo = db_connect();
 
 // ３．SQL文を用意(データ登録：INSERT)
 $stmt = $pdo->prepare(
-  "INSERT INTO product(order_number, product_name, point_from, point_to, time_from, time_to)
-  VALUES(:order_number, :product_name, :point_from, :point_to, :time_from, :time_to)");
+  "UPDATE product SET order_number=:order_number, product_name=:product_name, point_from=:point_from, point_to=:point_to, time_from=:time_from, time_to=:time_to
+  WHERE order_number=:order_number;");
 
 // 4. バインド変数を用意
 $stmt->bindValue(':order_number', $order_number, PDO::PARAM_INT);  //Integer（数値の場合 PDO::PARAM_INT)
